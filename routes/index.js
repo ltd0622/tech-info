@@ -6,5 +6,7 @@ router.use('/user', require('./user'))
 // 登录接口
 router.use('/auth', require('./auth'))
 
+// 分类接口
+router.use('/categories', require('./categories'))
 
 module.exports = router
