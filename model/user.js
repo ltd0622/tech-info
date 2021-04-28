@@ -33,6 +33,7 @@ function userValidator (data) {
   // 创建内容校验规则对象
   const schema = Joi.object({
     email: Joi.string().email().trim().lowercase().required().messages({
+      'string.base': 'email 必须为 String',
       'any.required': '缺少必选参数 email',
       'string.email': "email 格式错误"
     }),
@@ -43,6 +44,7 @@ function userValidator (data) {
     }),
     password: Joi.string().pattern(/^[a-zA-Z0-9]{6,12}$/).exist().messages({
       'string.pattern.base': '密码不符合规则',
+      'string.base': 'password 必须为 String',
       'any.required': '缺少必选参数 password'
     })
   })

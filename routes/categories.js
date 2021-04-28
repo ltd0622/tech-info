@@ -1,5 +1,8 @@
 const router = require('express').Router()
 
+const { categoryValidator } = require('../model/categories')
+const validator = require('../middleware/validate')
+
 // 获取全部
 router.get('/', (req, res, next) => {
   res.send('获取全部')
@@ -11,12 +14,12 @@ router.get('/:cid', (req, res, next) => {
 })
 
 // 添加新的
-router.post('/', (req, res, next) => {
+router.post('/', validator(categoryValidator), (req, res, next) => {
   res.send('添加新的')
 })
 
 // 编辑某个
-router.put('/:cid', (req, res, next) => {
+router.put('/:cid', validator(categoryValidator), (req, res, next) => {
   res.send('编辑某个')
 })
 
