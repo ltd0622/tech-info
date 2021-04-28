@@ -1,10 +1,11 @@
 const router = require('express').Router()
 
 const { userValidator } = require('../model/user')
+const validator = require('../middleware/validate')
 
 // 注册用户
-router.post('/', (req, res, next) => {
-  console.log(userValidator(req.body))
+router.post('/', validator(userValidator), (req, res, next) => {
+  console.log(req.validValue, '校验后的数据')
   res.send('注册')
 })
 
@@ -14,7 +15,8 @@ router.get('/', (req, res, next) => {
 })
 
 // 编辑用户
-router.put('/', (req, res, next) => {
+router.put('/', validator(userValidator), (req, res, next) => {
+  console.log(req.validValue, '校验后的数据')
   res.send('编辑用户')
 })
 
