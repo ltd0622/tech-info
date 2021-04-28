@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
+const Joi = require('joi')
 
+// 定义 user 的结构
 const userSchema = new mongoose.Schema({
   // 邮箱
   email: {
@@ -27,5 +29,20 @@ const userSchema = new mongoose.Schema({
 // 创建 Model
 const User = mongoose.model('User', userSchema)
 
+function userValidator (data) {
+  // 创建内容校验规则对象
+  const schema = Joi.object({
+    email: Joi.string().email().trim().lowercase().required(),
+    name: Joi.string().min(2).max(50),
+    password: Joi.string().pattern(/^[a-zA-Z0-9]{6,12}$/).exist()
+  })
+  return schema.validate(data)
+}
+
 // 导出
-module.exports = User
+module.exports = {
+  // 导出的 Model
+  User,
+  // 导出的校验函数
+  userValidator
+}

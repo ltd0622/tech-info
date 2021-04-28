@@ -1,7 +1,10 @@
 const router = require('express').Router()
 
+const { userValidator } = require('../model/user')
+
 // 注册用户
 router.post('/', (req, res, next) => {
+  console.log(userValidator(req.body))
   res.send('注册')
 })
 
