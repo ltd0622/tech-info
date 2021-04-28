@@ -32,9 +32,19 @@ const User = mongoose.model('User', userSchema)
 function userValidator (data) {
   // 创建内容校验规则对象
   const schema = Joi.object({
-    email: Joi.string().email().trim().lowercase().required(),
-    name: Joi.string().min(2).max(50),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{6,12}$/).exist()
+    email: Joi.string().email().trim().lowercase().required().messages({
+      'any.required': '缺少必选参数 email',
+      'string.email': "email 格式错误"
+    }),
+    name: Joi.string().min(2).max(50).messages({
+      'string.base': 'name 必须为 String',
+      'string.max': 'name 最多 50 个字符',
+      'string.min': 'name 最少 2 个字符'
+    }),
+    password: Joi.string().pattern(/^[a-zA-Z0-9]{6,12}$/).exist().messages({
+      'string.pattern.base': '密码不符合规则',
+      'any.required': '缺少必选参数 password'
+    })
   })
   return schema.validate(data)
 }
