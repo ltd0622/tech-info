@@ -1,5 +1,8 @@
 const router = require('express').Router()
 
+const { articleValidator } = require('../model/articles')
+const validator = require('../middleware/validate')
+
 // 获取全部
 //   - 如需获取某个分类下的所有文章，通过参数传递条件即可
 router.get('/', (req, res, next) => {
@@ -12,12 +15,12 @@ router.get('/:articleId', (req, res, next) => {
 })
 
 // 添加信息
-router.post('/', (req, res, next) => {
+router.post('/', validator(articleValidator), (req, res, next) => {
   res.send('添加新的')
 })
 
 // 编辑信息
-router.put('/:articleId', (req, res, next) => {
+router.put('/:articleId', validator(articleValidator), (req, res, next) => {
   res.send('编辑某个')
 })
 
