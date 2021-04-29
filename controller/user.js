@@ -1,10 +1,13 @@
 // 引入 User 模型
 const { User } = require('../model/user')
 
+// 引入 bcrypt
+const bcrypt = require('bcrypt')
+
 exports.register = async (req, res, next) => {
   try {
     // 存储经过校验的数据
-    const { email } = req.validValue
+    let { email, password } = req.validValue
     // 1 查询邮箱是否已经被注册过
     let user = await User.findOne({ email })
 
@@ -19,8 +22,25 @@ exports.register = async (req, res, next) => {
     }
 
     // 2 说明是可注册的新用户
+    const salt = await bcrypt.genSalt(10)
+    password = await bcrypt.hash(password, salt)
 
-    res.send('注册')
+    // 3 创建 user 实例
+    user = new User({
+      email,
+      password,
+      name: '请添加用户名'
+    })
+
+    // 4 存储
+    await user.save()
+
+    // 5 响应
+    res.status(200).json({
+      code: 200,
+      msg: '注册成功',
+      data: { email }
+    })
   } catch (err) {
     next(err)
   }
