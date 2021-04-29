@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Joi = require('joi')
+// 引入 joi-objectid 并设置为 Joi 的熟悉
+Joi.objectId = require('joi-objectid')(Joi)
 
 // 定义 article 的结构
 const articleSchema = new mongoose.Schema({
@@ -48,6 +50,10 @@ function articleValidator (data) {
       'string.base': 'status 必须为字符串',
       'any.required': 'status 必须设置',
       'any.only': 'valid 取值有误，可选值为 published、drafted、trashed'
+    }),
+    category: Joi.objectId().required().messages({
+      'string.pattern.name': 'category 格式有误，应为 ObjectId 格式',
+      'any.required': 'category 必选'
     })
   })
   return schema.validate(data)
