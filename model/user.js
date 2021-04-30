@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 const Joi = require('joi')
 
+// 引入 jwt 与 配置文件
+const jwt = require('jsonwebtoken')
+const config = require('../config')
+
 // 定义 user 的结构
 const userSchema = new mongoose.Schema({
   // 邮箱
@@ -25,6 +29,13 @@ const userSchema = new mongoose.Schema({
     maxlength: 1024
   }
 })
+
+// 为 User 封装生成 Token 的功能
+userSchema.methods.generateToken = function () {
+  return jwt.sign({
+    _id: this._id
+  }, config.jwtPrivateKey)
+}
 
 // 创建 Model
 const User = mongoose.model('User', userSchema)

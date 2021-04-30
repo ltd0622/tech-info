@@ -29,7 +29,10 @@ exports.test = async (req, res, next) => {
     // 3 登录成功，响应成功状态即可
     res.status(200).json({
       code: 200,
-      msg: '登录成功'
+      msg: '登录成功',
+      authorization: {
+        access_token: user.generateToken()
+      }
     })
   } catch (err) {
     next(err)
