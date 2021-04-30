@@ -5,16 +5,18 @@ const validator = require('../middleware/validate')
 
 const user = require('../controller/user')
 
+const auth = require('../middleware/auth')
+
 // 注册用户
 router.post('/', validator(userValidator), user.register)
 
 // 获取用户
-router.get('/', user.getInfo)
+router.get('/', auth, user.getInfo)
 
 // 编辑用户
-router.put('/', validator(userValidator), user.updateInfo)
+router.put('/', [auth, validator(userValidator)], user.updateInfo)
 
 // 删除用户
-router.delete('/', user.deleteUser)
+router.delete('/', auth, user.deleteUser)
 
 module.exports = router

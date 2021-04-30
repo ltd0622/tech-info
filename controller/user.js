@@ -4,6 +4,7 @@ const { User } = require('../model/user')
 // 引入 bcrypt
 const bcrypt = require('bcrypt')
 
+// 用户注册接口
 exports.register = async (req, res, next) => {
   try {
     // 存储经过校验的数据
@@ -46,9 +47,11 @@ exports.register = async (req, res, next) => {
   }
 }
 
+// 获取用户信息接口
 exports.getInfo = (req, res, next) => {
+  console.log(req.userData)
+
   try {
-    // 书写业务逻辑
     res.send('获取用户')
   } catch (err) {
     next(err)
