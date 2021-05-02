@@ -48,11 +48,17 @@ exports.register = async (req, res, next) => {
 }
 
 // 获取用户信息接口
-exports.getInfo = (req, res, next) => {
-  console.log(req.userData)
-
+exports.getInfo = async (req, res, next) => {
   try {
-    res.send('获取用户')
+    // 1 查询用户信息
+    const data = await User.findById(req.userData._id, { password: 0 })
+    
+    // 2 发送响应
+    res.status(200).json({
+      code: 200,
+      msg: '获取用户信息成功',
+      data
+    })
   } catch (err) {
     next(err)
   }
