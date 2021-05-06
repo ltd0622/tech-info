@@ -64,10 +64,34 @@ exports.getInfo = async (req, res, next) => {
   }
 }
 
-exports.updateInfo = (req, res, next) => {
+exports.updateInfo = async (req, res, next) => {
   try {
-    // 书写业务逻辑
-    res.send('编辑用户')
+    // 1 检测是否存在 _id 参数
+    const body = req.body
+    if (!body._id) {
+      return res.status(400).json({
+        code: 400,
+        msg: '缺少参数 _id'
+      })
+    }
+
+    // 2 查找并更新用户
+    const data = await User.findByIdAndUpdate(body._id, body)
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '编辑用户信息失败'
+      })
+    }
+
+    // 3 成功响应
+    //   - 不响应密码信息
+    delete body.password
+    res.status(200).json({
+      code: 200,
+      msg: '编辑用户信息成功',
+      data: body
+    })
   } catch (err) {
     next(err)
   }

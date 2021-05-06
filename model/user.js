@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Joi = require('joi')
+Joi.objectId = require('joi-objectid')(Joi)
 
 // 引入 jwt 与 配置文件
 const jwt = require('jsonwebtoken')
@@ -57,7 +58,8 @@ function userValidator (data) {
       'string.pattern.base': '密码不符合规则',
       'string.base': 'password 必须为 String',
       'any.required': '缺少必选参数 password'
-    })
+    }),
+    _id: Joi.objectId()
   })
   return schema.validate(data)
 }
