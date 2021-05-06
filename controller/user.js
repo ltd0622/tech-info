@@ -64,6 +64,7 @@ exports.getInfo = async (req, res, next) => {
   }
 }
 
+// 编辑用户
 exports.updateInfo = async (req, res, next) => {
   try {
     // 1 检测是否存在 _id 参数
@@ -97,10 +98,36 @@ exports.updateInfo = async (req, res, next) => {
   }
 }
 
-exports.deleteUser = (req, res, next) => {
+// 删除用户
+exports.deleteUser = async (req, res, next) => {
   try {
-    // 书写业务逻辑
-    res.send('删除')
+    // 1 检测是否存在 id
+    const id = req.body._id
+    if (!id) {
+      return res.status(400).json({
+        code: 400,
+        msg: '请传入id'
+      })
+    }
+
+    // 2 查找用户数据并删除
+    const data = await User.findByIdAndDelete(id)
+    //  - data 为 null 说明没有删除成功
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '删除用户失败',
+        value: {
+          _id: id
+        }
+      })
+    }
+    // 3 删除成功，正常响应即可
+    res.status(200).json({
+      code: 200,
+      msg: '删除用户成功',
+      data
+    })
   } catch (err) {
     next(err)
   }
