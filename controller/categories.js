@@ -1,5 +1,4 @@
 // 引入分类 Model
-const { binary } = require('joi')
 const { Category } = require('../model/categories')
 
 // 获取全部
@@ -116,9 +115,26 @@ exports.update = async (req, res, next) => {
 }
 
 // 删除
-exports.remove = (req, res, next) => {
+exports.remove = async (req, res, next) => {
   try {
-    res.send('删除某个')
+    // 1 根据动态路由参数删除数据
+    const cid = req.params.cid
+    const data = await Category.findByIdAndDelete(cid)
+    // 2 根据返回值判断是否删除成功
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '分类删除失败',
+        value: {
+          cid
+        }
+      })
+    }
+    res.status(200).json({
+      code: 200,
+      msg: '删除分类成功',
+      data
+    })
   } catch (err) {
     next(err)
   }
