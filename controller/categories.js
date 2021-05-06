@@ -2,9 +2,17 @@
 const { Category } = require('../model/categories')
 
 // 获取全部
-exports.getAll = (req, res, next) => {
+exports.getAll = async (req, res, next) => {
   try {
-    res.send('获取全部')
+    // 1 查询所有分类信息
+    const data = await Category.find()
+
+    // 2 响应
+    res.status(200).json({
+      code: 200,
+      msg: "分类获取成功",
+      data
+    })
   } catch (err) {
     next(err)
   }
@@ -40,9 +48,35 @@ exports.create = async (req, res, next) => {
 }
 
 // 获取某个
-exports.get = (req, res, next) => {
+exports.get = async (req, res, next) => {
   try {
-    res.send('获取某个')
+    // 1 检测是否存在 id（通过动态路由参数接收）
+    const cid = req.params.cid
+    if (!cid) {
+      return res.status(400).json({
+        code: 400,
+        msg: '请传入分类 id'
+      })
+    }
+    // 2 根据动态路由参数获取分类
+    const data = await Category.findById(cid)
+
+    // 3 检测并响应
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '获取信息失败',
+        value: {
+          cid
+        }
+      })
+    }
+    res.status(200).json({
+      code: 200,
+      msg: '分类信息获取成功',
+      data
+    })
+    
   } catch (err) {
     next(err)
   }
