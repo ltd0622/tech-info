@@ -1,4 +1,5 @@
 // 引入分类 Model
+const { binary } = require('joi')
 const { Category } = require('../model/categories')
 
 // 获取全部
@@ -83,9 +84,32 @@ exports.get = async (req, res, next) => {
 }
 
 // 编辑
-exports.update = (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
-    res.send('编辑某个')
+    // 1 检测 id 信息
+    const cid = req.params.cid
+    if (!cid) {
+      return res.status(400).json({
+        code: 400,
+        msg: '请传入id'
+      })
+    }
+    // 2 根据动态路由参数更新数据
+    const data = await Category.findByIdAndUpdate(cid, req.body, { new: true })
+    // 3 判断是否编辑成功
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '编辑分类失败',
+        value: req.body
+      })
+    }
+
+    res.status(200).json({
+      code: 200,
+      msg: '编辑分类成功',
+      data
+    })
   } catch (err) {
     next(err)
   }
