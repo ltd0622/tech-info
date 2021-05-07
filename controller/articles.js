@@ -41,9 +41,27 @@ exports.create = async (req, res, next) => {
 }
 
 // 获取某个
-exports.get = (req, res, next) => {
+exports.get = async (req, res, next) => {
   try {
-    res.send('获取某个')
+    // 1 根据 ID 获取数据
+    const id = req.params.articleId
+    const data = await Article.findById(id).populate('category author', 'name')
+
+    // 2 检测是否存在数据
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '获取文章失败',
+        value: {
+          id
+        }
+      })
+    }
+    res.status(200).json({
+      code: 200,
+      msg: '获取文章成功',
+      data
+    })
   } catch (err) {
     next(err)
   }
