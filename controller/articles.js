@@ -68,9 +68,27 @@ exports.get = async (req, res, next) => {
 }
 
 // 编辑文章
-exports.update = (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
-    res.send('编辑某个')
+    // 1 修改数据
+    const data = await Article.findByIdAndUpdate(req.params.articleId, req.body, { new: true })
+    
+    // 2 检测并响应
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '文章修改失败',
+        value: Object.assign(req.body, {
+          _id: req.params.articleId
+        })
+      })
+    }
+
+    res.status(200).json({
+      code: 200,
+      msg: '文章修改成功',
+      data
+    })
   } catch (err) {
     next(err)
   }
