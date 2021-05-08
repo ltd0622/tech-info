@@ -67,7 +67,7 @@ exports.get = async (req, res, next) => {
   }
 }
 
-// 编辑
+// 编辑文章
 exports.update = (req, res, next) => {
   try {
     res.send('编辑某个')
@@ -76,9 +76,27 @@ exports.update = (req, res, next) => {
   }
 }
 
-exports.remove = (req, res, next) => {
+// 删除文章
+exports.remove = async (req, res, next) => {
   try {
-    res.send('删除某个')
+    // 1 删除数据
+    const data = await Article.findByIdAndDelete(req.params.articleId)
+    // 2 检测并响应
+    if (!data) {
+      return res.status(400).json({
+        code: 400,
+        msg: '删除文章失败',
+        value: {
+          id: req.params.articleId
+        }
+      })
+    }
+
+    res.status(200).json({
+      code: 200,
+      msg: '删除文章成功',
+      data
+    })
   } catch (err) {
     next(err)
   }
