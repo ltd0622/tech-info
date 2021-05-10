@@ -1,5 +1,7 @@
 // 引入 User 模型
 const { User } = require('../model/user')
+// 引入 Arricle 模型
+const { Article } = require('../model/articles')
 
 // 引入 bcrypt
 const bcrypt = require('bcrypt')
@@ -52,7 +54,7 @@ exports.getInfo = async (req, res, next) => {
   try {
     // 1 查询用户信息
     const data = await User.findById(req.userData._id, { password: 0 })
-    
+
     // 2 发送响应
     res.status(200).json({
       code: 200,
@@ -75,6 +77,10 @@ exports.updateInfo = async (req, res, next) => {
         msg: '缺少参数 _id'
       })
     }
+
+    // 对编辑用户中的密码信息进行加密，同时也可对email进行查询，避免重复(略)
+    const salt = await bcrypt.genSalt(10)
+    body.password = await bcrypt.hash(body.password, salt)
 
     // 2 查找并更新用户
     const data = await User.findByIdAndUpdate(body._id, body)
@@ -112,6 +118,12 @@ exports.deleteUser = async (req, res, next) => {
 
     // 2 查找用户数据并删除
     const data = await User.findByIdAndDelete(id)
+
+    // 3 添加了新功能-删除用户发布过的文章信息
+    await Article.remove({
+      author: id
+    })
+
     //  - data 为 null 说明没有删除成功
     if (!data) {
       return res.status(400).json({
