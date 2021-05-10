@@ -4,6 +4,7 @@ const config = require('./config')
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
+const path = require('path')
 
 const app = express()
 
@@ -20,6 +21,9 @@ app.use('/api', require('./routes'))
 
 // 引入错误处理中间件
 app.use(require('./middleware/error'))
+
+// ==== 静态资源 ====
+app.use(express.static(path.join(__dirname, './public')))
 
 app.listen(config.app.port, () => {
   console.log(`Running at http://localhost:${config.app.port}`)
