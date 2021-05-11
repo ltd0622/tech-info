@@ -27,242 +27,28 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <!-- 文章结构 -->
+              <% for (var i = 0; i < article.length; i++) { %>
               <tr>
                 <!-- 标题 -->
                 <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
+                  <a href="/articles/<%= article[i]._id %>">
+                    <%= article[i].title %>
+                  </a>
                 </td>
                 <!-- 类别 -->
                 <td class="px-6 py-4 whitespace-nowrap">
-                  生活
+                  <%= article[i].category.name %>
                 </td>
                 <!-- 作者 -->
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
+                  <%= article[i].author.name %>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <!-- 创作时间 -->
-                  2020-01-23
+                  <%= +article[i].createdAt %>
                 </td>
               </tr>
-              <!-- 静态演示结构开始 -->
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <tr>
-                <!-- 标题 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  今日天气晴好，市民纷纷外出踏青
-                </td>
-                <!-- 类别 -->
-                <td class="px-6 py-4 whitespace-nowrap">
-                  生活
-                </td>
-                <!-- 作者 -->
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  小吴
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <!-- 创作时间 -->
-                  2020-01-23
-                </td>
-              </tr>
-              <!-- 静态演示结构结束 -->
+              <% } %>
             </tbody>
           </table>
         </div>
