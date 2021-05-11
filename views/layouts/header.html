@@ -11,22 +11,17 @@
         <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div class="hidden sm:block sm:ml-6">
             <div class="flex space-x-6 pl-10">
-              <!-- 当前选中分类类名为: "bg-gray-900 text-white px-6 py-2 rounded-md text-sm font-medium" -->
-              <a href="#" class="nav-item-cur" aria-current="page">
+              <!-- 设置首页，因为首页不是分类，在数据库中不存在，要单独设置 -->
+              <a href="/" class="<%= current ? 'nav-item' : 'nav-item-cur' %>" aria-current="page">
                 首页
               </a>
-              <a href="#" class="nav-item">
-                科技
+              <%
+                for (var i = 0; i < cate.length; i++) {
+              %>
+              <a href="/<%= cate[i]._id %>" class="<%= current === cate[i]._id.toString() ? 'nav-item-cur': 'nav-item' %>">
+                <%= cate[i].name %>
               </a>
-              <a href="#" class="nav-item">
-                生活
-              </a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-2 rounded-md text-sm font-medium">
-                体育
-              </a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-6 py-2 rounded-md text-sm font-medium">
-                娱乐
-              </a>
+              <% } %>
             </div>
           </div>
         </div>
