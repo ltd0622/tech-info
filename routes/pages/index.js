@@ -29,8 +29,20 @@ Router.get(['/', '/:cid'], async (req, res) => {
 })
 
 // 文章页路由
-Router.get('/articles/:articleId', (req, res) => {
-  res.render('article.html')
+Router.get('/articles/:articleId', async (req, res) => {
+  // 1 处理 current
+  const current = '非首页无需显示'
+  // 2 获取分类数据
+  const cate = await Category.find()
+  // 3 获取文章数据
+  const article = await Article.findById(req.params.articleId).populate('category author', 'name')
+
+  // 将数据传递给模板引擎
+  res.render('article.html', {
+    cate,
+    current,
+    article
+  })
 })
 
 
