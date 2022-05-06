@@ -15,13 +15,15 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 200
+    maxlength: 1024
   },
   status: String,
+  // 创建时间
   createdAt: {
     type: Date,
     default: Date.now
   },
+  // 更新时间
   updatedAt: {
     type: Date,
     default: Date.now
@@ -31,6 +33,7 @@ const articleSchema = new mongoose.Schema({
     ref: 'Category',
     required: true
   },
+  // 文章的用户信息
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -45,7 +48,7 @@ const Article = mongoose.model('Article', articleSchema)
 function articleValidator (data) {
   const schema = Joi.object({
     title: Joi.string().min(2).max(50).required(),
-    content: Joi.string().min(2).max(200).required(),
+    content: Joi.string().min(2).max(1024).required(),
     status: Joi.string().valid('published', 'drafted', 'trashed').required().messages({
       'string.base': 'status 必须为字符串',
       'any.required': 'status 必须设置',

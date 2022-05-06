@@ -1,10 +1,13 @@
+/* 
+* 前台页面路由管理
+*/
 const Router = require('express').Router()
 
 // 引入 Model
 const { Category } = require('../../model/categories')
 const { Article } = require('../../model/articles')
 
-// 首页路由与分类路由
+// 首页路由与分类路由都设置到 index.html
 Router.get(['/', '/:cid'], async (req, res) => {
   // 1 读取数据库，获取分类数据
   const cate = await Category.find()
@@ -18,6 +21,7 @@ Router.get(['/', '/:cid'], async (req, res) => {
   if (current) {
     options.category = current
   }
+  // populate 做连表查询
   const article = await Article.find(options).populate('category author', 'name')
 
   // 将数据传递给模板引擎
@@ -31,6 +35,7 @@ Router.get(['/', '/:cid'], async (req, res) => {
 // 文章页路由
 Router.get('/articles/:articleId', async (req, res) => {
   // 1 处理 current
+  // 即 在文章页面时 bar 栏 都不高亮
   const current = '非首页无需显示'
   // 2 获取分类数据
   const cate = await Category.find()

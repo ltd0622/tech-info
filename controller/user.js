@@ -3,11 +3,14 @@ const { User } = require('../model/user')
 // 引入 Arricle 模型
 const { Article } = require('../model/articles')
 
-// 引入 bcrypt
+// 引入 bcrypt 加密包
 const bcrypt = require('bcrypt')
 
 // 用户注册接口
 exports.register = async (req, res, next) => {
+  // console.log(userValidator(req.body))
+  // res.send('注册')
+
   try {
     // 存储经过校验的数据
     let { email, password } = req.validValue
@@ -115,9 +118,10 @@ exports.deleteUser = async (req, res, next) => {
         msg: '请传入id'
       })
     }
-
+    
     // 2 查找用户数据并删除
-    const data = await User.findByIdAndDelete(id)
+    // const data = await User.findByIdAndDelete(id)
+    const data = await User.findByIdAndDelete(id, { password: 0 })
 
     // 3 添加了新功能-删除用户发布过的文章信息
     await Article.remove({

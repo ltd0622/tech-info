@@ -26,6 +26,7 @@ exports.getAll = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     // 1 创建并存储数据
+    // Object.assign() 合并
     const data = new Article(Object.assign(req.body, { author: req.userData._id }))
     await data.save()
 
@@ -45,6 +46,13 @@ exports.get = async (req, res, next) => {
   try {
     // 1 根据 ID 获取数据
     const id = req.params.articleId
+    // const data = await Article.findById(id).populate([{
+    //   path: 'category',
+    //   select: 'name'
+    // }, {
+    //   path: 'author',
+    //   select: 'name'
+    // }])
     const data = await Article.findById(id).populate('category author', 'name')
 
     // 2 检测是否存在数据

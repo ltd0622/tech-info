@@ -3,6 +3,7 @@ const { User } = require('../model/user')
 // 引入 bcrypt
 const bcrypt = require('bcrypt')
 
+// 认证、登录 
 exports.test = async (req, res, next) => {
   try {
     const validValue = req.validValue

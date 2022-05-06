@@ -54,7 +54,7 @@ function userValidator (data) {
       'string.max': 'name 最多 50 个字符',
       'string.min': 'name 最少 2 个字符'
     }),
-    password: Joi.string().pattern(/^[a-zA-Z0-9]{6,12}$/).exist().messages({
+    password: Joi.string().pattern(/^[a-zA-Z0-9]{6,18}$/).exist().messages({
       'string.pattern.base': '密码不符合规则',
       'string.base': 'password 必须为 String',
       'any.required': '缺少必选参数 password'
